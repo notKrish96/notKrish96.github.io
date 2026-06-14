@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Krish Goel — Cybersecurity</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Space+Grotesk:wght@600;700&display=swap');
+
+  :root{
+    --black:#080810;
+    --purple:#7c3aed;
+    --purple-light:#a78bfa;
+    --white:#f0f0ff;
+    --muted:#6b7280;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  body{
+    background:var(--black);
+    color:var(--white);
+    font-family:'Inter', sans-serif;
+    height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    text-align:center;
+    overflow:hidden;
+  }
+
+  .grid-bg{
+    position:fixed;
+    inset:0;
+    background-image:
+      linear-gradient(rgba(124,58,237,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(124,58,237,0.05) 1px, transparent 1px);
+    background-size: 50px 50px;
+    pointer-events:none;
+  }
+
+  .glow{
+    position:fixed;
+    width:600px;
+    height:600px;
+    background: radial-gradient(circle, rgba(124,58,237,0.15), transparent 70%);
+    border-radius:50%;
+    top:50%; left:50%;
+    transform:translate(-50%,-50%);
+    pointer-events:none;
+  }
+
+  h1{
+    font-family:'Space Grotesk', sans-serif;
+    font-size:clamp(2rem, 6vw, 4rem);
+    margin-bottom:0.5rem;
+    z-index:1;
+  }
+
+  .tagline{
+    font-family:'Share Tech Mono', monospace;
+    color:var(--purple-light);
+    font-size:1rem;
+    margin-bottom:1.5rem;
+    z-index:1;
+  }
+
+  .cursor{
+    display:inline-block;
+    width:2px;
+    height:1em;
+    background:var(--purple-light);
+    margin-left:2px;
+    vertical-align:middle;
+    animation: blink 1s step-end infinite;
+  }
+
+  @keyframes blink{ 50%{ opacity:0; } }
+
+  .status{
+    font-family:'Share Tech Mono', monospace;
+    font-size:0.75rem;
+    color:var(--muted);
+    letter-spacing:0.15em;
+    z-index:1;
+    border:1px solid rgba(124,58,237,0.2);
+    padding:0.5rem 1.25rem;
+  }
+</style>
+</head>
+<body>
+  <div class="grid-bg"></div>
+  <div class="glow"></div>
+  <h1>krish<span style="color:var(--purple-light)">goel</span>.dev</h1>
+  <p class="tagline">> penetration tester in training<span class="cursor"></span></p>
+  <p class="status">SITE UNDER CONSTRUCTION</p>
+</body>
+</html>
