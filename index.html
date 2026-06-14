@@ -464,10 +464,10 @@ function update(){
 
   // --- Cursor movement ---
   // Browser icon sits at roughly center-top of the spread grid (row1, col2)
-  const targetX = 56; // vw % - right edge of browser icon
-  const targetY = 30; // vh %
-  const startX = 50;
-  const startY = 65;
+  const targetX = 53; // vw % - tip lands on right edge of browser icon
+  const targetY = 29; // vh %
+  const startX = 88;
+  const startY = 88;
 
   if(progress < 0.05){
     pointer.style.opacity = 0;
@@ -489,7 +489,7 @@ function update(){
   }
 
   // --- Terminal (browser window) ---
-  if(progress > 0.26 && progress < 0.85){
+  if(progress > 0.26 && progress < 0.78){
     terminal.classList.add('visible');
   } else {
     terminal.classList.remove('visible');
@@ -518,7 +518,7 @@ function update(){
     const t = (progress - 0.48) / 0.12;
     const dots = Math.floor(t * passwordDots);
     passField.innerHTML = '•'.repeat(dots) + '<span class="cursor-blink"></span>';
-  } else if(progress < 0.85){
+  } else if(progress < 0.78){
     passField.innerHTML = '•'.repeat(passwordDots);
   } else {
     passField.innerHTML = '';
@@ -532,7 +532,7 @@ function update(){
   } else if(progress < 0.68){
     statusField.textContent = 'authenticating...';
     statusField.classList.remove('success');
-  } else if(progress < 0.85){
+  } else if(progress < 0.78){
     statusField.textContent = 'access granted';
     statusField.classList.add('success');
   } else {
@@ -540,17 +540,17 @@ function update(){
   }
 
   // --- Terminal expand near the end ---
-  if(progress > 0.68 && progress < 0.85){
-    const t = (progress - 0.68) / 0.17;
+  if(progress > 0.66 && progress < 0.78){
+    const t = (progress - 0.66) / 0.12;
     terminal.style.width = (460 + t * 600) + 'px';
     terminal.style.borderRadius = (8 - t*8) + 'px';
-  } else if(progress <= 0.68) {
+  } else if(progress <= 0.66) {
     terminal.style.width = '';
     terminal.style.borderRadius = '';
   }
 
   // --- Welcome reveal ---
-  if(progress > 0.80 && progress <= 0.90){
+  if(progress > 0.78 && progress <= 0.90){
     welcome.classList.add('visible');
     welcome.classList.remove('exit');
   } else if(progress > 0.90){
