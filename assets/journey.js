@@ -1569,12 +1569,63 @@ const clock = $('clock');
 const tick = () => { clock.textContent = new Date().toTimeString().split(' ')[0]; };
 tick(); setInterval(tick, 1000);
 
+/* =====================================================================
+   AUTOPLAY: plays the journey like a film. Any scroll, touch or key
+   press hands control straight back to the visitor.
+   ===================================================================== */
+const SEC_PER_UNIT = 2.3;   // overall speed: seconds per unit of scene weight (lower = faster)
+const PACE = {              // per-scene slow-down for the hero moments (1 = normal)
+  '1.2': 1.1, '1.3': 1.35, '2.4': 1.1, '3.6': 1.1, '4.3': 1.3, '4.5': 1.15, '6.5': 1.4,
+};
+const IDLE_START_MS = 6000; // start by itself if nobody scrolls this long on the first screen
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const playBtn = $('play'), playHint = $('playHint');
+let playing = false, autoX = 0, interacted = false, idleTimer = null;
+
+function setPlaying(on) {
+  playing = on;
+  if (on) autoX = X;
+  playBtn.innerHTML = on ? '&#10074;&#10074; pause' : (X > 0.05 && X < W - 0.15 ? '&#9654; resume' : '&#9654; play');
+  playBtn.setAttribute('aria-pressed', String(on));
+}
+function advanceAuto(dt) {
+  if (!playing) return;
+  let i = SCENES.length - 1;
+  for (let k = 0; k < SCENES.length; k++) if (autoX < cum[k + 1]) { i = k; break; }
+  autoX += dt / (SEC_PER_UNIT * (PACE[SCENES[i].id] || 1));
+  if (autoX >= W) { autoX = W; setPlaying(false); }
+  scrollTo({ top: autoX / W * (document.documentElement.scrollHeight - innerHeight), behavior: 'instant' });
+}
+playBtn.addEventListener('click', e => {
+  e.preventDefault();
+  interacted = true; clearTimeout(idleTimer);
+  if (!playing && X >= W - 0.15) jumpTo(0);
+  setPlaying(!playing);
+});
+const takeControl = e => {
+  if (e && e.target instanceof Node && playBtn.contains(e.target)) return;
+  interacted = true; clearTimeout(idleTimer);
+  if (playing) setPlaying(false);
+};
+for (const type of ['wheel', 'touchstart', 'pointerdown']) addEventListener(type, takeControl, { passive: true });
+addEventListener('keydown', e => { if (['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End', ' '].includes(e.key)) takeControl(e); });
+function armIdleStart() {
+  if (reduceMotion) return;
+  idleTimer = setTimeout(() => {
+    if (interacted || X > 0.05) return;
+    setPlaying(true);
+    playHint.classList.add('show');
+    setTimeout(() => playHint.classList.remove('show'), 4500);
+  }, IDLE_START_MS);
+}
+
 let REALMS = {};
 let cur = 0, lastT = performance.now(), activeRealm = null;
 
 function render(now) {
   const dt = Math.min((now - lastT) / 1000, 0.05);
   lastT = now;
+  advanceAuto(dt);
   const target = scrollP();
   if (snapNext) { cur = target; snapNext = false; }
   else cur += (target - cur) * (1 - Math.exp(-dt * 4.5));
@@ -1639,5 +1690,6 @@ async function boot() {
   requestAnimationFrame(render);
   await frame(); await frame();
   $('boot').classList.add('done');
+  armIdleStart();
 }
 boot();
