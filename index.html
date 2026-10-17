@@ -3,569 +3,181 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Access Sequence — Preview</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Space+Grotesk:wght@600;700&display=swap');
-
-  :root{
-    --black:#070710;
-    --deep:#0d0d1a;
-    --purple:#7c3aed;
-    --purple-light:#a78bfa;
-    --white:#f0f0ff;
-    --muted:#6b7280;
-    --mono:'Share Tech Mono', monospace;
-    --display:'Space Grotesk', sans-serif;
+<title>Krish Goel — Portfolio</title>
+<meta name="description" content="Krish Goel — aspiring penetration tester. A cinematic journey from the motherboard to the network.">
+<meta name="theme-color" content="#05040c">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Space+Grotesk:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="assets/journey.css?v=23">
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
   }
-
-  *{ margin:0; padding:0; box-sizing:border-box; }
-  html{ scroll-behavior:smooth; }
-
-  body{
-    background:var(--black);
-    color:var(--white);
-    font-family:var(--mono);
-    overflow-x:hidden;
-  }
-
-  /* ===== SCROLL STAGE ===== */
-  .sequence{
-    height: 650vh;
-    position: relative;
-  }
-
-  .stage{
-    position: fixed;
-    inset: 0;
-    overflow: hidden;
-  }
-
-  .grid-bg{
-    position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(124,58,237,0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(124,58,237,0.05) 1px, transparent 1px);
-    background-size: 48px 48px;
-    mask-image: radial-gradient(circle at 50% 50%, black 0%, transparent 75%);
-  }
-
-  /* ===== DESKTOP SCENE ===== */
-  .desktop{
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-  }
-
-  .desktop.visible{ opacity: 1; }
-
-  .desktop-bar{
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    padding: 14px 24px;
-    font-size: 0.7rem;
-    color: var(--muted);
-    letter-spacing: 0.15em;
-    border-bottom: 1px solid rgba(124,58,237,0.12);
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .icon-grid{
-    position: absolute;
-    inset: 14% 8% 14% 8%;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    align-items: center;
-    justify-items: center;
-  }
-
-  .icon{
-    width: 64px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    transition: transform 0.25s ease;
-  }
-
-  .icon-box{
-    width: 48px;
-    height: 48px;
-    border: 1px solid rgba(124,58,237,0.3);
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(124,58,237,0.04);
-  }
-
-  .icon-label{
-    font-size: 0.6rem;
-    color: var(--muted);
-    letter-spacing: 0.1em;
-  }
-
-  .icon.target.clicked{
-    transform: scale(1.18);
-  }
-
-  .icon.target.clicked .icon-box{
-    border-color: var(--purple-light);
-    box-shadow: 0 0 24px rgba(124,58,237,0.5);
-    background: rgba(124,58,237,0.12);
-  }
-
-  .icon-box svg{ width: 22px; height: 22px; }
-  .icon-box path, .icon-box circle, .icon-box rect{
-    stroke: var(--purple-light);
-    stroke-width: 1.5;
-    fill: none;
-  }
-
-  /* cursor */
-  .pointer{
-    position: absolute;
-    width: 22px;
-    height: 22px;
-    opacity: 0;
-    transform-origin: 4px 2px;
-    transition: left 0.5s ease, top 0.5s ease, opacity 0.3s ease, transform 0.15s ease;
-    pointer-events: none;
-    filter: drop-shadow(0 0 6px rgba(124,58,237,0.85)) drop-shadow(0 0 2px rgba(167,139,250,0.6));
-  }
-
-  .pointer.clicked{ transform: scale(0.85); }
-
-  .pointer svg path{ fill: #0a0a12; stroke: var(--purple-light); stroke-width: 1; stroke-linejoin: round; }
-
-  /* ===== BROWSER / TERMINAL WINDOW ===== */
-  .terminal{
-    position: absolute;
-    width: min(90vw, 460px);
-    background: rgba(13,13,26,0.9);
-    border: 1px solid rgba(124,58,237,0.35);
-    box-shadow: 0 0 60px rgba(124,58,237,0.15), 0 20px 60px rgba(0,0,0,0.6);
-    backdrop-filter: blur(8px);
-    opacity: 0;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0.05);
-    transform-origin: center center;
-    transition: opacity 0.4s ease, transform 0.6s ease, width 0.8s ease, border-radius 0.8s ease;
-  }
-
-  .terminal.visible{
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
-
-  .terminal-bar{
-    display:flex;
-    align-items:center;
-    gap: 8px;
-    padding: 10px 14px;
-    border-bottom: 1px solid rgba(124,58,237,0.2);
-  }
-
-  .dot{ width:10px; height:10px; border-radius:50%; background: rgba(124,58,237,0.3); }
-
-  .terminal-title{
-    margin-left: 8px;
-    font-size: 0.7rem;
-    color: var(--muted);
-    letter-spacing: 0.1em;
-  }
-
-  .terminal-body{
-    padding: 28px 24px 32px;
-    min-height: 220px;
-    display:flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .term-line{
-    display:flex;
-    align-items:center;
-    gap: 10px;
-    font-size: 0.95rem;
-    color: var(--white);
-  }
-
-  .term-label{ color: var(--purple-light); white-space: nowrap; }
-
-  .term-value{
-    flex:1;
-    min-height: 1.2em;
-    border-bottom: 1px solid rgba(124,58,237,0.2);
-    padding-bottom: 4px;
-    letter-spacing: 0.05em;
-  }
-
-  .term-status{
-    margin-top: auto;
-    font-size: 0.8rem;
-    color: var(--muted);
-    letter-spacing: 0.15em;
-    min-height: 1.4em;
-  }
-
-  .term-status.success{ color: var(--purple-light); }
-
-  .cursor-blink{
-    display:inline-block;
-    width: 2px;
-    height: 1em;
-    background: var(--purple-light);
-    animation: blink 1s step-end infinite;
-    vertical-align: middle;
-  }
-
-  @keyframes blink{ 50%{ opacity:0; } }
-
-  /* ===== WELCOME ===== */
-  .welcome{
-    position:absolute;
-    inset:0;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    opacity:0;
-    pointer-events:none;
-    transform: translateY(0px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-  }
-
-  .welcome.visible{ opacity:1; }
-  .welcome.exit{ opacity:0; transform: translateY(-80px); }
-
-  .welcome h1{
-    font-family: var(--display);
-    font-size: clamp(3rem, 12vw, 7rem);
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    background: linear-gradient(135deg, var(--white), var(--purple-light));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-
-  /* progress bar */
-  .progress-track{
-    position:fixed;
-    bottom: 32px;
-    left:50%;
-    transform: translateX(-50%);
-    width: 160px;
-    height: 2px;
-    background: rgba(124,58,237,0.15);
-    z-index: 5;
-  }
-  .progress-fill{
-    height:100%;
-    width:0%;
-    background: linear-gradient(90deg, var(--purple), var(--purple-light));
-  }
-
-  .scroll-hint{
-    position: fixed;
-    bottom: 56px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 0.65rem;
-    color: var(--muted);
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    z-index: 5;
-    transition: opacity 0.4s ease;
-  }
-
-  /* ===== AFTER ===== */
-  .next-section{
-    height: 100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    flex-direction: column;
-    gap: 1rem;
-    text-align:center;
-    padding: 2rem;
-    background: var(--deep);
-    border-top: 1px solid rgba(124,58,237,0.1);
-  }
-
-  .next-section h2{ font-family: var(--display); font-size: 2rem; }
-  .next-section p{
-    color: var(--muted);
-    font-family: 'Inter', sans-serif;
-    max-width: 420px;
-    line-height: 1.7;
-    font-size: 0.9rem;
-  }
-
-  @media (max-width: 640px){
-    .icon-grid{ inset: 12% 6% 12% 6%; }
-    .icon{ width: 52px; }
-    .icon-box{ width: 40px; height: 40px; }
-  }
-</style>
+}
+</script>
 </head>
 <body>
 
-<div class="sequence">
-  <div class="grid-bg"></div>
+<!-- 3D canvas: the whole journey renders here -->
+<canvas id="scene" aria-hidden="true"></canvas>
 
-  <div class="stage">
+<!-- fades between worlds -->
+<div id="fade"></div>
 
-    <!-- DESKTOP SCENE -->
-    <div class="desktop" id="desktop">
-      <div class="desktop-bar">
-        <span>guest@server</span>
-        <span id="clock">00:00:00</span>
+<!-- boot screen -->
+<div id="boot">
+  <div class="boot-line">booting krishgoel.dev<span class="cursor-blink"></span></div>
+  <div class="boot-bar"><div id="bootFill"></div></div>
+</div>
+
+<!-- ===================== HUD ===================== -->
+<header class="hud">
+  <a class="brand" href="#" id="replayTop"><span>~/</span>notkrish</a>
+</header>
+
+<div class="chapter-card" id="chapterCard">
+  <div class="cc-num" id="ccNum">Chapter 1</div>
+  <div class="cc-title" id="ccTitle">The Awakening</div>
+  <div class="cc-sub" id="ccSub">The journey begins inside a computer.</div>
+</div>
+
+<div class="scroll-hint" id="scrollHint">scroll to begin</div>
+
+<nav class="timeline-bar" id="timelineBar" aria-label="Chapters"></nav>
+
+<a class="skip" id="skip" href="#">skip intro &rarr;</a>
+
+<!--
+  ===================== SPOILERS =====================
+  Short teasers that appear during the journey.
+  data-scene = which scene it shows in (see the scene list in assets/journey.js)
+  data-side  = left or right
+  Replace everything in [square brackets] with your own text.
+  The "know more" link points at the matching section of dashboard.html.
+-->
+<aside class="spoiler" data-scene="1.2" data-side="left">
+  <div class="sp-tag">// whoami</div>
+  <h3>Hi, I'm Krish.</h3>
+  <p>[One or two lines about you: what you study, and what got you into computers and security.]</p>
+  <a href="dashboard.html#about">know more &rarr;</a>
+</aside>
+
+<aside class="spoiler" data-scene="2.4" data-side="right">
+  <div class="sp-tag">// what I do</div>
+  <h3>[My setup, my tools]</h3>
+  <p>[A line on what you spend your time doing: Linux, Python, CTFs, building things…]</p>
+  <a href="dashboard.html#skills">know more &rarr;</a>
+</aside>
+
+<aside class="spoiler" data-scene="3.4" data-side="left">
+  <div class="sp-tag">// the path I chose</div>
+  <h3>Offensive security</h3>
+  <p>[Why you picked penetration testing out of everything in the network.]</p>
+  <a href="dashboard.html#goal">know more &rarr;</a>
+</aside>
+
+<aside class="spoiler" data-scene="3.6" data-side="right">
+  <div class="sp-tag">// currently learning</div>
+  <h3>[Linux · Networking · Web security]</h3>
+  <p>[What you're learning right now, and where: TryHackMe, PortSwigger, a course…]</p>
+  <a href="dashboard.html#learning">know more &rarr;</a>
+</aside>
+
+<aside class="spoiler" data-scene="4.2" data-side="left">
+  <div class="sp-tag">// things I've built</div>
+  <h3>Projects</h3>
+  <ul>
+    <li>[Project one]: [one line]</li>
+    <li>[Project two]: [one line]</li>
+    <li>[Project three]: [one line]</li>
+  </ul>
+  <a href="dashboard.html#projects">see all projects &rarr;</a>
+</aside>
+
+<aside class="spoiler" data-scene="4.4" data-side="right">
+  <div class="sp-tag">// contributions</div>
+  <h3>[Hackathons · open source · clubs]</h3>
+  <p>[Your biggest contribution in one line.]</p>
+  <a href="dashboard.html#contributions">know more &rarr;</a>
+</aside>
+
+<aside class="spoiler" data-scene="5.3" data-side="left">
+  <div class="sp-tag">// the core</div>
+  <h3>Becoming a Penetration Tester</h3>
+  <p>[What you want to become, and what you want to learn next to get there.]</p>
+  <a href="dashboard.html#goal">see the roadmap &rarr;</a>
+</aside>
+
+<!-- ===================== CHAPTER 6 · OS / LOGIN ===================== -->
+<div class="os" id="os">
+  <div class="desktop" id="desktop">
+    <div class="desktop-bar">
+      <span>guest@krishgoel.dev</span>
+      <span id="clock">00:00:00</span>
+    </div>
+    <div class="icon-grid">
+      <div class="icon">
+        <div class="icon-box"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="1"/><path d="M3 8h18"/></svg></div>
+        <span class="icon-label">files</span>
       </div>
-      <div class="icon-grid">
-        <div class="icon">
-          <div class="icon-box">
-            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="1"/><path d="M3 8h18"/></svg>
-          </div>
-          <span class="icon-label">files</span>
-        </div>
-        <div class="icon target" id="browserIcon">
-          <div class="icon-box">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
-          </div>
-          <span class="icon-label">browser</span>
-        </div>
-        <div class="icon">
-          <div class="icon-box">
-            <svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
-          </div>
-          <span class="icon-label">logs</span>
-        </div>
-        <div class="icon">
-          <div class="icon-box">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.5 4.5l2 2M17.5 17.5l2 2M4.5 19.5l2-2M17.5 6.5l2-2"/></svg>
-          </div>
-          <span class="icon-label">config</span>
-        </div>
-        <div class="icon">
-          <div class="icon-box">
-            <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
-          </div>
-          <span class="icon-label">processes</span>
-        </div>
-        <div class="icon">
-          <div class="icon-box">
-            <svg viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z"/></svg>
-          </div>
-          <span class="icon-label">security</span>
-        </div>
+      <div class="icon target" id="browserIcon">
+        <div class="icon-box"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></div>
+        <span class="icon-label">browser</span>
       </div>
-      <div class="pointer" id="pointer">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M4 2 L4 19 L8.2 15.2 L11.3 21.5 L14 20.2 L11 14 L17 14 Z"/>
-        </svg>
+      <div class="icon">
+        <div class="icon-box"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></div>
+        <span class="icon-label">logs</span>
+      </div>
+      <div class="icon">
+        <div class="icon-box"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.5 4.5l2 2M17.5 17.5l2 2M4.5 19.5l2-2M17.5 6.5l2-2"/></svg></div>
+        <span class="icon-label">config</span>
+      </div>
+      <div class="icon">
+        <div class="icon-box"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></div>
+        <span class="icon-label">processes</span>
+      </div>
+      <div class="icon">
+        <div class="icon-box"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z"/></svg></div>
+        <span class="icon-label">security</span>
       </div>
     </div>
-
-    <!-- BROWSER / TERMINAL -->
-    <div class="terminal" id="terminal">
-      <div class="terminal-bar">
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <span class="terminal-title">secure_access.sh</span>
-      </div>
-      <div class="terminal-body">
-        <div class="term-line">
-          <span class="term-label">user:</span>
-          <span class="term-value" id="userField"></span>
-        </div>
-        <div class="term-line">
-          <span class="term-label">pass:</span>
-          <span class="term-value" id="passField"></span>
-        </div>
-        <div class="term-status" id="statusField"></div>
-      </div>
+    <div class="pointer" id="pointer">
+      <svg viewBox="0 0 24 24"><path d="M4 2 L4 19 L8.2 15.2 L11.3 21.5 L14 20.2 L11 14 L17 14 Z"/></svg>
     </div>
-
-    <!-- WELCOME -->
-    <div class="welcome" id="welcome">
-      <h1>Welcome</h1>
-    </div>
-
   </div>
 
-  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
-  <div class="scroll-hint" id="scrollHint">scroll to begin</div>
+  <div class="terminal" id="terminal">
+    <div class="terminal-bar">
+      <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      <span class="terminal-title">secure_access.sh</span>
+    </div>
+    <div class="terminal-body">
+      <div class="term-line"><span class="term-label">user:</span><span class="term-value" id="userField"></span></div>
+      <div class="term-line"><span class="term-label">pass:</span><span class="term-value" id="passField"></span></div>
+      <div class="term-status" id="statusField"></div>
+    </div>
+  </div>
+
+  <div class="welcome" id="welcome">
+    <h1>Welcome</h1>
+    <p class="welcome-sub">You've reached Krish Goel's core.</p>
+    <div class="welcome-cta" id="welcomeCta">
+      <a class="btn primary" href="dashboard.html">enter the dashboard &rarr;</a>
+      <a class="btn" href="#" id="replay">&#8634; replay</a>
+    </div>
+  </div>
 </div>
 
-<div class="next-section">
-  <h2>// site content begins here</h2>
-  <p>This is where About, Skills, and the rest of your real sections would continue. The cinematic sequence above ends here and transitions naturally into the page.</p>
-</div>
+<noscript>
+  <div class="fallback">This site needs JavaScript for its 3D journey. <a href="dashboard.html">Open the dashboard instead &rarr;</a></div>
+</noscript>
+<div class="fallback" id="noWebgl" hidden>Your browser can't run the 3D journey. <a href="dashboard.html">Open the dashboard instead &rarr;</a></div>
 
-<script>
-const desktop = document.getElementById('desktop');
-const pointer = document.getElementById('pointer');
-const browserIcon = document.getElementById('browserIcon');
-const terminal = document.getElementById('terminal');
-const userField = document.getElementById('userField');
-const passField = document.getElementById('passField');
-const statusField = document.getElementById('statusField');
-const welcome = document.getElementById('welcome');
-const progressFill = document.getElementById('progressFill');
-const scrollHint = document.getElementById('scrollHint');
-const clock = document.getElementById('clock');
+<!-- tall spacer: scrolling through it drives the camera -->
+<div id="scroller"></div>
 
-const username = "guest";
-const passwordDots = 8;
-
-// live clock for desktop bar
-function tick(){
-  const d = new Date();
-  clock.textContent = d.toTimeString().split(' ')[0];
-}
-tick();
-setInterval(tick, 1000);
-
-function lerp(a,b,t){ return a + (b-a)*t; }
-
-function update(){
-  const scrollTop = window.scrollY;
-  const docHeight = document.querySelector('.sequence').offsetHeight - window.innerHeight;
-  const progress = Math.min(Math.max(scrollTop / docHeight, 0), 1);
-
-  progressFill.style.width = (progress*100) + '%';
-  scrollHint.style.opacity = progress < 0.03 ? 1 : 0;
-
-  /* ============ STAGE TIMELINE ============
-     0.00 - 0.05  desktop fades in
-     0.05 - 0.20  cursor moves toward browser icon
-     0.20 - 0.26  click (icon pulses)
-     0.26 - 0.36  desktop fades out, browser window scales open from icon
-     0.36 - 0.48  typing username
-     0.48 - 0.60  typing password
-     0.60 - 0.68  authenticating
-     0.68 - 0.80  access granted + expand
-     0.80 - 0.90  welcome visible
-     0.90 - 1.00  welcome exits
-  ============================================ */
-
-  // --- Desktop visibility ---
-  if(progress > 0.005 && progress < 0.30){
-    desktop.classList.add('visible');
-  } else {
-    desktop.classList.remove('visible');
-  }
-
-  // --- Cursor movement ---
-  // Browser icon sits at roughly center-top of the spread grid (row1, col2)
-  const targetX = 53; // vw % - tip lands on right edge of browser icon
-  const targetY = 29; // vh %
-  const startX = 88;
-  const startY = 88;
-
-  if(progress < 0.05){
-    pointer.style.opacity = 0;
-  } else if(progress < 0.20){
-    const t = (progress - 0.05) / 0.15;
-    pointer.style.opacity = 1;
-    pointer.style.left = lerp(startX, targetX, t) + 'vw';
-    pointer.style.top = lerp(startY, targetY, t) + 'vh';
-    pointer.classList.remove('clicked');
-    browserIcon.classList.remove('clicked');
-  } else if(progress < 0.26){
-    pointer.style.opacity = 1;
-    pointer.style.left = targetX + 'vw';
-    pointer.style.top = targetY + 'vh';
-    pointer.classList.add('clicked');
-    browserIcon.classList.add('clicked');
-  } else {
-    pointer.style.opacity = 0;
-  }
-
-  // --- Terminal (browser window) ---
-  if(progress > 0.26 && progress < 0.78){
-    terminal.classList.add('visible');
-  } else {
-    terminal.classList.remove('visible');
-  }
-
-  // terminal opens from icon position during 0.26 - 0.36
-  if(progress > 0.26 && progress < 0.40){
-    terminal.style.transformOrigin = targetX + 'vw ' + targetY + 'vh';
-  }
-
-  // --- Username typing ---
-  if(progress < 0.36){
-    userField.innerHTML = '';
-  } else if(progress < 0.48){
-    const t = (progress - 0.36) / 0.12;
-    const chars = Math.floor(t * username.length);
-    userField.innerHTML = username.substring(0, chars) + '<span class="cursor-blink"></span>';
-  } else {
-    userField.innerHTML = username;
-  }
-
-  // --- Password typing ---
-  if(progress < 0.48){
-    passField.innerHTML = '';
-  } else if(progress < 0.60){
-    const t = (progress - 0.48) / 0.12;
-    const dots = Math.floor(t * passwordDots);
-    passField.innerHTML = '•'.repeat(dots) + '<span class="cursor-blink"></span>';
-  } else if(progress < 0.78){
-    passField.innerHTML = '•'.repeat(passwordDots);
-  } else {
-    passField.innerHTML = '';
-    userField.innerHTML = '';
-  }
-
-  // --- Status messages ---
-  if(progress < 0.60){
-    statusField.textContent = '';
-    statusField.classList.remove('success');
-  } else if(progress < 0.68){
-    statusField.textContent = 'authenticating...';
-    statusField.classList.remove('success');
-  } else if(progress < 0.78){
-    statusField.textContent = 'access granted';
-    statusField.classList.add('success');
-  } else {
-    statusField.textContent = '';
-  }
-
-  // --- Terminal expand near the end ---
-  if(progress > 0.66 && progress < 0.78){
-    const t = (progress - 0.66) / 0.12;
-    terminal.style.width = (460 + t * 600) + 'px';
-    terminal.style.borderRadius = (8 - t*8) + 'px';
-  } else if(progress <= 0.66) {
-    terminal.style.width = '';
-    terminal.style.borderRadius = '';
-  }
-
-  // --- Welcome reveal ---
-  if(progress > 0.78 && progress <= 0.90){
-    welcome.classList.add('visible');
-    welcome.classList.remove('exit');
-  } else if(progress > 0.90){
-    welcome.classList.remove('visible');
-    welcome.classList.add('exit');
-  } else {
-    welcome.classList.remove('visible');
-    welcome.classList.remove('exit');
-  }
-}
-
-window.addEventListener('scroll', update);
-window.addEventListener('resize', update);
-update();
-</script>
-
+<script type="module" src="assets/journey.js?v=23"></script>
 </body>
 </html>
