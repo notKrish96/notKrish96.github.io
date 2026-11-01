@@ -267,6 +267,16 @@
     html{ scroll-behavior:auto; }
     .reveal{ opacity:1; transform:none; transition:none; }
   }
+
+  /* grouped skills + learning list */
+  .skill-group{ margin-top: 24px; }
+  .skill-group h3{ font-family: var(--mono); font-size: 0.72rem; font-weight: normal; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+  .skill-group .chips{ margin-top: 10px; }
+  .chip small{ color: var(--muted); font-size: 0.68rem; margin-left: 8px; }
+  .learn{ list-style: none; margin-top: 36px; max-width: 680px; }
+  .learn li{ display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 20px; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 0.9rem; color: var(--white); }
+  .learn li span{ color: var(--muted); font-size: 0.82rem; }
+  .card .role{ font-size: 0.78rem; color: var(--purple-light); }
 </style>
 </head>
 <body>
@@ -289,7 +299,6 @@
 <!-- ===================== MAIN ===================== -->
 <!--
   HOW TO EDIT
-  Anything with class="ph" or in [square brackets] is placeholder text, so replace it with your own.
   To add a project / contribution / skill, copy one existing block and change the text.
 -->
 <main id="main">
@@ -314,8 +323,8 @@
       <div>
         <div class="prompt">guest@krishgoel.dev<span>:~$</span> whoami</div>
         <h1>Krish Goel</h1>
-        <p class="role">Aspiring <strong>Penetration Tester</strong> · <span class="ph">[student at your college / school]</span></p>
-        <p class="lead" style="margin-top:18px">I break things (legally) to learn how to make them safer. This page follows the path of a pentest: scroll down to run it.</p>
+        <p class="role">Aspiring <strong>Penetration Tester</strong> · B.Tech CSE (Cybersecurity), SRM University Delhi-NCR</p>
+        <p class="lead" style="margin-top:18px">Curiosity got me into computers. Breaking things (ethically) made me stay. This page follows the path of a pentest: scroll down to run it.</p>
       </div>
     </section>
 
@@ -325,8 +334,9 @@
         <div class="reveal">
           <div class="phase">01 // recon <b>— about me</b></div>
           <h2>Who I am</h2>
-          <p class="lead"><span class="ph">[2–3 sentences about you: where you study, what got you into computers and security, what you enjoy building or breaking.]</span></p>
-          <p class="lead" style="margin-top:14px"><span class="ph">[One line about what you do day to day, e.g. "I spend most evenings on TryHackMe rooms and building small tools in Python."]</span></p>
+          <p class="lead">I'm Krish, a second-year B.Tech Computer Science student specializing in Cybersecurity at SRM University, Delhi-NCR (Sonipat), based in Delhi, India.</p>
+          <p class="lead" style="margin-top:14px">My curiosity about computers gradually grew into wanting to understand how systems work, how networks communicate and how vulnerabilities get exploited. That led me to Linux, networking, ethical hacking and cybersecurity.</p>
+          <p class="lead" style="margin-top:14px">Day to day, I explore security concepts, experiment with Linux and networking tools, build software, automate workflows, and keep learning about vulnerabilities and penetration testing.</p>
         </div>
         <!-- radar -->
         <svg class="art" viewBox="0 0 300 300" data-draw>
@@ -352,17 +362,54 @@
         <div class="reveal">
           <div class="phase">02 // enumeration <b>— what I do</b></div>
           <h2>Skills &amp; tools</h2>
-          <p class="lead"><span class="ph">[One sentence on the kind of work you do.]</span></p>
-          <div class="chips">
-            <!-- copy a chip to add more -->
-            <span class="chip"><i>$</i>[Linux]</span>
-            <span class="chip"><i>$</i>[Python]</span>
-            <span class="chip"><i>$</i>[Networking]</span>
-            <span class="chip"><i>$</i>[Nmap]</span>
-            <span class="chip"><i>$</i>[Burp Suite]</span>
-            <span class="chip"><i>$</i>[Wireshark]</span>
-            <span class="chip"><i>$</i>[HTML / CSS / JS]</span>
-            <span class="chip"><i>$</i>[Git]</span>
+          <p class="lead">Security tooling, networks, software and hardware, with an honest label on how far along I am with each.</p>
+          <div class="skill-group">
+            <h3>Languages</h3>
+            <div class="chips">
+              <span class="chip"><i>$</i>Python<small>fundamentals</small></span>
+              <span class="chip"><i>$</i>C<small>learning</small></span>
+              <span class="chip"><i>$</i>Kotlin<small>project experience</small></span>
+              <span class="chip"><i>$</i>JavaScript<small>exploring</small></span>
+              <span class="chip"><i>$</i>Bash<small>learning</small></span>
+              <span class="chip"><i>$</i>SQL<small>fundamentals</small></span>
+            </div>
+          </div>
+          <div class="skill-group">
+            <h3>Security tools</h3>
+            <div class="chips">
+              <span class="chip"><i>$</i>Nmap<small>learning</small></span>
+              <span class="chip"><i>$</i>Wireshark<small>learning</small></span>
+              <span class="chip"><i>$</i>Metasploit<small>exploring</small></span>
+              <span class="chip"><i>$</i>Bettercap<small>learning</small></span>
+              <span class="chip"><i>$</i>Aircrack-ng<small>learning</small></span>
+            </div>
+          </div>
+          <div class="skill-group">
+            <h3>OS &amp; platforms</h3>
+            <div class="chips">
+              <span class="chip"><i>$</i>Kali Linux<small>hands-on</small></span>
+              <span class="chip"><i>$</i>Parrot OS<small>hands-on</small></span>
+              <span class="chip"><i>$</i>Windows 11<small>comfortable</small></span>
+              <span class="chip"><i>$</i>Linux<small>learning</small></span>
+              <span class="chip"><i>$</i>Android<small>app development</small></span>
+            </div>
+          </div>
+          <div class="skill-group">
+            <h3>Tools &amp; hardware</h3>
+            <div class="chips">
+              <span class="chip"><i>$</i>Git &amp; GitHub</span>
+              <span class="chip"><i>$</i>Android Studio</span>
+              <span class="chip"><i>$</i>Jetpack Compose</span>
+              <span class="chip"><i>$</i>Arduino</span>
+              <span class="chip"><i>$</i>Raspberry Pi</span>
+              <span class="chip"><i>$</i>ESP32</span>
+              <span class="chip"><i>$</i>Cisco Packet Tracer</span>
+              <span class="chip"><i>$</i>MySQL</span>
+              <span class="chip"><i>$</i>Tailscale</span>
+              <span class="chip"><i>$</i>Oracle Cloud</span>
+              <span class="chip"><i>$</i>PyQt5 / PySide6</span>
+              <span class="chip"><i>$</i>AI APIs &amp; integrations</span>
+            </div>
           </div>
         </div>
         <!-- terminal scan -->
@@ -387,34 +434,66 @@
     <section id="projects" data-node>
       <div class="reveal">
         <div class="phase">03 // exploitation <b>— projects</b></div>
-        <h2>Things I've built</h2>
-        <p class="lead">Projects, tools and write-ups I'm proud of.</p>
+        <h2>Things I build</h2>
+        <p class="lead">Security platforms, apps and hardware, finished and in progress.</p>
       </div>
       <div class="cards">
         <!-- ===== copy this whole <article> block to add a project ===== -->
         <article class="card reveal">
           <svg class="corner" viewBox="0 0 28 28"><path d="M0 1 H27 V28" fill="none" stroke="#a78bfa" stroke-width="2"/></svg>
-          <div class="tag">[TOOL]</div>
-          <h3>[Project name]</h3>
-          <p>[What it does and why you built it, in one or two sentences.]</p>
-          <div class="stack">[Python · Scapy · Linux]</div>
-          <div class="links"><a href="#">github &rarr;</a><a href="#">live &rarr;</a></div>
+          <div class="tag">CYBERSECURITY · IN DEVELOPMENT</div>
+          <h3>AVPE</h3>
+          <p>Autonomous Vulnerability Prioritization Engine: an AI-powered platform that discovers vulnerabilities, analyzes security risks, prioritizes threats and helps organizations make informed security investment decisions.</p>
+          <div class="role">Creator · personal project</div>
+          <div class="stack">Python · AI/ML · Security frameworks · Vulnerability intelligence · Networking · Risk analysis</div>
         </article>
         <article class="card reveal">
           <svg class="corner" viewBox="0 0 28 28"><path d="M0 1 H27 V28" fill="none" stroke="#a78bfa" stroke-width="2"/></svg>
-          <div class="tag">[WEB]</div>
-          <h3>[Project name]</h3>
-          <p>[What it does and why you built it, in one or two sentences.]</p>
-          <div class="stack">[React · FastAPI]</div>
-          <div class="links"><a href="#">github &rarr;</a></div>
+          <div class="tag">COMPUTER VISION · TESTED</div>
+          <h3>AI CCTV Video Attendance</h3>
+          <p>Automates student attendance from CCTV footage using computer vision. Developed and tested over about two months through multiple project rounds.</p>
+          <div class="role">Lead backend developer · Team NullXByte</div>
+          <div class="stack">AI · Computer vision · Video processing</div>
         </article>
         <article class="card reveal">
           <svg class="corner" viewBox="0 0 28 28"><path d="M0 1 H27 V28" fill="none" stroke="#a78bfa" stroke-width="2"/></svg>
-          <div class="tag">[CTF WRITE-UP]</div>
-          <h3>[Room / box name]</h3>
-          <p>[How you solved it, and what you learned from it.]</p>
-          <div class="stack">[TryHackMe · Web · PrivEsc]</div>
-          <div class="links"><a href="#">read &rarr;</a></div>
+          <div class="tag">ANDROID · IN DEVELOPMENT</div>
+          <h3>Canvas Nova</h3>
+          <p>A wallpaper app that brings together Wallhaven, Reddit and NASA's Astronomy Picture of the Day, with Unsplash, Pexels and Pixabay planned. A cache-first design using WorkManager is planned to improve network efficiency and battery use.</p>
+          <div class="role">Independent developer</div>
+          <div class="stack">Kotlin · Jetpack Compose · Android Studio · REST APIs</div>
+        </article>
+        <article class="card reveal">
+          <svg class="corner" viewBox="0 0 28 28"><path d="M0 1 H27 V28" fill="none" stroke="#a78bfa" stroke-width="2"/></svg>
+          <div class="tag">WINDOWS · IN DEVELOPMENT</div>
+          <h3>NULL//UTILITY</h3>
+          <p>A parody app with 150+ deliberately useless tools that simulate lengthy processing before presenting obvious answers. Includes random loading messages, search, favorites, categories and a dark purple futuristic interface.</p>
+          <div class="role">Independent developer</div>
+          <div class="stack">Windows desktop development · UI/UX design</div>
+        </article>
+        <article class="card reveal">
+          <svg class="corner" viewBox="0 0 28 28"><path d="M0 1 H27 V28" fill="none" stroke="#a78bfa" stroke-width="2"/></svg>
+          <div class="tag">HARDWARE · PROTOTYPE</div>
+          <h3>Dual-Axis Solar Tracker</h3>
+          <p>An Arduino system that uses light sensors to turn a solar panel toward the sun and maximize exposure, integrated with a solar-powered streetlight concept.</p>
+          <div class="role">Hardware and software team member</div>
+          <div class="stack">Arduino UNO · C/C++ · LDR sensors · Servo motors · 3D printing</div>
+        </article>
+        <article class="card reveal">
+          <svg class="corner" viewBox="0 0 28 28"><path d="M0 1 H27 V28" fill="none" stroke="#a78bfa" stroke-width="2"/></svg>
+          <div class="tag">WEB APP · HACKATHON</div>
+          <h3>FestFlow</h3>
+          <p>A tech fest management app for registrations, QR check-in, waitlists, judging and live results.</p>
+          <div class="role">Developer · with help from Akshay, Amrit and Swastik</div>
+          <div class="stack">Next.js · TypeScript · Tailwind CSS · PostgreSQL</div>
+        </article>
+        <article class="card reveal">
+          <svg class="corner" viewBox="0 0 28 28"><path d="M0 1 H27 V28" fill="none" stroke="#a78bfa" stroke-width="2"/></svg>
+          <div class="tag">ANDROID · CONCEPT</div>
+          <h3>Anti-Theft App</h3>
+          <p>A planned security app to protect phones against theft and unauthorized physical access: authentication before shutdown or restart, intrusion alerts, emergency contact notifications and device recovery help.</p>
+          <div class="role">Planning and feature specification</div>
+          <div class="stack">Android · Kotlin (planned)</div>
         </article>
       </div>
     </section>
@@ -424,24 +503,19 @@
       <div class="reveal">
         <div class="phase">04 // privilege escalation <b>— contributions</b></div>
         <h2>Contributions</h2>
-        <p class="lead">Hackathons, open source, clubs, and team work.</p>
+        <p class="lead">Hackathons, team work and independent development.</p>
       </div>
       <ul class="timeline">
         <!-- copy an <li> to add more -->
         <li class="reveal">
-          <div class="when">[2026]</div>
-          <h3>[Hackathon / event name]</h3>
-          <p>[What you built or did, and your role on the team.]</p>
+          <div class="when">HACKATHON</div>
+          <h3>CodeX 3.0: top 80 of about 200 teams</h3>
+          <p>Advanced to the top 80 in a 36-hour hackathon at PIET, Panipat.</p>
         </li>
         <li class="reveal">
-          <div class="when">[2026]</div>
-          <h3>[Open-source repo you contributed to]</h3>
-          <p>[What your PR or issue fixed.]</p>
-        </li>
-        <li class="reveal">
-          <div class="when">[2025]</div>
-          <h3>[Club / community / CTF team]</h3>
-          <p>[What you do there.]</p>
+          <div class="when">INDEPENDENT</div>
+          <h3>Solo projects</h3>
+          <p>AVPE, Canvas Nova, NULL//UTILITY, this website, and more software and hardware experiments.</p>
         </li>
       </ul>
     </section>
@@ -451,28 +525,16 @@
       <div class="reveal">
         <div class="phase">05 // persistence <b>— what I'm learning</b></div>
         <h2>Currently learning</h2>
-        <p class="lead">What I'm working on right now. The bars fill as you scroll; set each <code>data-value</code> (0–100) to how far along you are.</p>
+        <p class="lead">What I'm working on right now, and where.</p>
       </div>
-      <div class="bars">
-        <!-- copy a .bar-item to add more -->
-        <div class="bar-item reveal">
-          <div class="bar-head"><span>[Linux fundamentals]</span><span>[TryHackMe]</span></div>
-          <div class="bar" data-value="70"><svg viewBox="0 0 100 2" preserveAspectRatio="none"><rect class="bg" width="100" height="2"/><rect class="fg" width="0" height="2"/></svg></div>
-        </div>
-        <div class="bar-item reveal">
-          <div class="bar-head"><span>[Networking (TCP/IP, subnetting)]</span><span>[course]</span></div>
-          <div class="bar" data-value="50"><svg viewBox="0 0 100 2" preserveAspectRatio="none"><rect class="bg" width="100" height="2"/><rect class="fg" width="0" height="2"/></svg></div>
-        </div>
-        <div class="bar-item reveal">
-          <div class="bar-head"><span>[Web app security (OWASP Top 10)]</span><span>[PortSwigger Academy]</span></div>
-          <div class="bar" data-value="30"><svg viewBox="0 0 100 2" preserveAspectRatio="none"><rect class="bg" width="100" height="2"/><rect class="fg" width="0" height="2"/></svg></div>
-        </div>
-        <div class="bar-item reveal">
-          <div class="bar-head"><span>[Python for security tooling]</span><span>[self-study]</span></div>
-          <div class="bar" data-value="40"><svg viewBox="0 0 100 2" preserveAspectRatio="none"><rect class="bg" width="100" height="2"/><rect class="fg" width="0" height="2"/></svg></div>
-        </div>
-      </div>
-      <svg width="0" height="0" style="position:absolute"><defs><linearGradient id="barGrad" x1="0" x2="1"><stop offset="0" stop-color="#7c3aed"/><stop offset="1" stop-color="#a78bfa"/></linearGradient></defs></svg>
+      <ul class="learn">
+        <!-- copy an <li> to add more -->
+        <li class="reveal">Networking<span>Jeremy's IT Lab, CCNA fundamentals</span></li>
+        <li class="reveal">Linux fundamentals<span>Hands-on Linux and Kali Linux practice</span></li>
+        <li class="reveal">Python programming<span>Self-learning and real projects</span></li>
+        <li class="reveal">Cybersecurity &amp; penetration testing<span>Practical experiments with networking and security tools</span></li>
+        <li class="reveal">Bash scripting<span>Self-learning</span></li>
+      </ul>
     </section>
 
     <!-- ===== 06 GOAL / NEXT TARGET ===== -->
@@ -480,7 +542,7 @@
       <div class="reveal">
         <div class="phase">06 // next target <b>— where I'm headed</b></div>
         <h2>Becoming a Penetration Tester</h2>
-        <p class="lead">The route I'm following. <span class="ph">[Edit the stops to match your own plan.]</span></p>
+        <p class="lead">I want to understand systems from an attacker's perspective, identify weaknesses before malicious actors can exploit them, and be able to assess and improve real-world security. This is the route.</p>
       </div>
 
       <!-- desktop roadmap -->
@@ -492,27 +554,33 @@
         <circle class="stop" cx="520" cy="200" r="8"/>
         <circle class="stop" cx="760" cy="60" r="8"/>
         <circle class="stop goal" cx="860" cy="60" r="11"/>
-        <text x="40" y="236" text-anchor="middle">Foundations</text>
-        <text x="40" y="252" text-anchor="middle" class="sub">[Linux · networking]</text>
-        <text x="280" y="30" text-anchor="middle">Web security</text>
-        <text x="280" y="46" text-anchor="middle" class="sub">[OWASP · Burp]</text>
-        <text x="520" y="236" text-anchor="middle">CTFs &amp; labs</text>
-        <text x="520" y="252" text-anchor="middle" class="sub">[HTB · THM]</text>
-        <text x="760" y="30" text-anchor="middle">Certifications</text>
-        <text x="760" y="46" text-anchor="middle" class="sub">[eJPT → OSCP]</text>
+        <text x="40" y="236" text-anchor="middle">CCNA</text>
+        <text x="40" y="252" text-anchor="middle" class="sub">Networking fundamentals</text>
+        <text x="280" y="30" text-anchor="middle">eJPT</text>
+        <text x="280" y="46" text-anchor="middle" class="sub">Entry-level pentesting</text>
+        <text x="520" y="236" text-anchor="middle">PNPT</text>
+        <text x="520" y="252" text-anchor="middle" class="sub">Practical pentesting</text>
+        <text x="760" y="30" text-anchor="middle">OSCP</text>
+        <text x="760" y="46" text-anchor="middle" class="sub">Advanced practical</text>
         <text x="860" y="100" text-anchor="middle" fill="#a78bfa">Pentester</text>
       </svg>
 
       <!-- mobile roadmap -->
       <ul class="timeline roadmap-mobile">
-        <li class="reveal"><div class="when">STOP 1</div><h3>Foundations</h3><p>[Linux · networking]</p></li>
-        <li class="reveal"><div class="when">STOP 2</div><h3>Web security</h3><p>[OWASP · Burp]</p></li>
-        <li class="reveal"><div class="when">STOP 3</div><h3>CTFs &amp; labs</h3><p>[HTB · THM]</p></li>
-        <li class="reveal"><div class="when">STOP 4</div><h3>Certifications</h3><p>[eJPT → OSCP]</p></li>
+        <li class="reveal"><div class="when">STOP 1</div><h3>CCNA</h3><p>Networking fundamentals</p></li>
+        <li class="reveal"><div class="when">STOP 2</div><h3>eJPT</h3><p>Entry-level penetration testing</p></li>
+        <li class="reveal"><div class="when">STOP 3</div><h3>PNPT</h3><p>Practical penetration testing</p></li>
+        <li class="reveal"><div class="when">STOP 4</div><h3>OSCP</h3><p>Advanced practical penetration testing</p></li>
         <li class="reveal"><div class="when">TARGET</div><h3>Penetration Tester</h3></li>
       </ul>
 
-      <p class="lead reveal" style="margin-top:32px"><span class="ph">[A few lines on what you want to learn next and why pentesting: what kind of pentester you want to become (web, network, red team…).]</span></p>
+      <div class="skill-group reveal"><h3>What I want to focus on</h3>
+        <div class="chips reveal"><span class="chip"><i>$</i>Network penetration testing</span><span class="chip"><i>$</i>Web application security</span><span class="chip"><i>$</i>Red teaming</span><span class="chip"><i>$</i>Infrastructure security</span><span class="chip"><i>$</i>Offensive security research</span></div>
+      </div>
+      <div class="skill-group reveal"><h3>What I want to learn next</h3>
+        <div class="chips reveal"><span class="chip"><i>$</i>Advanced networking</span><span class="chip"><i>$</i>Web application security</span><span class="chip"><i>$</i>Active Directory pentesting</span><span class="chip"><i>$</i>Linux internals</span><span class="chip"><i>$</i>Privilege escalation</span><span class="chip"><i>$</i>Exploitation techniques</span><span class="chip"><i>$</i>Pentest methodologies</span></div>
+      </div>
+      <p class="lead reveal" style="margin-top:32px">In 2–3 years, I want to be working as a capable penetration tester or offensive security engineer, with strong practical experience, a portfolio of real-world security projects, and the ability to independently assess and secure complex systems.</p>
     </section>
 
     <!-- ===== 07 CONTACT / REPORT ===== -->
@@ -521,12 +589,11 @@
         <div class="reveal">
           <div class="phase">07 // report <b>— get in touch</b></div>
           <h2>Let's talk</h2>
-          <p class="lead">Open to internships, CTF teams and collaborations.</p>
+          <p class="lead">Open to cybersecurity internships, penetration testing opportunities, CTF teams, open-source and security research collaborations, and interesting development projects.</p>
           <div class="contact-links">
+            <a class="btn" href="mailto:krishgoel96@gmail.com">krishgoel96@gmail.com</a>
+            <a class="btn" href="https://www.linkedin.com/in/krishgoel96/">LinkedIn</a>
             <a class="btn" href="https://github.com/notKrish96">GitHub</a>
-            <a class="btn" href="#">[LinkedIn]</a>
-            <a class="btn" href="#">[TryHackMe / HTB]</a>
-            <a class="btn" href="#">[email]</a>
           </div>
         </div>
         <!-- padlock -->
@@ -540,7 +607,7 @@
     </section>
 
   </div>
-  <footer>© <span id="year"></span> Krish Goel · built by hand, hosted on GitHub Pages</footer>
+  <footer>© <span id="year"></span> Krish Goel · Delhi, India</footer>
 </main>
 
 <script>

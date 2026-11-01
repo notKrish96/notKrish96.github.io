@@ -441,9 +441,9 @@ body.at-end .timeline-bar{ opacity:0; pointer-events:none; }
 
 @media (max-width: 760px){
   .hud{ padding:14px 16px; }
-  .spoiler{ top:auto; bottom:84px; left:16px !important; right:16px !important; width:auto; }
+  .spoiler{ top:auto; bottom:142px; left:16px !important; right:16px !important; width:auto; }
   .spoiler[data-side]{ transform:translateY(20px); }
-  .spoiler.show{ transform:none; }
+  .spoiler[data-side].show{ transform:none; }
   .timeline-bar button{ width:30px; }
   .skip{ bottom:56px; right:16px; }
   .play{ bottom:98px; right:16px; }
